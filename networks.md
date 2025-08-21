@@ -1,7 +1,6 @@
 # Managing Network Ports and Processes
 
 <details><summary>Managing Network Ports and Processes</summary>
-
 | Task                     | Windows                             | Linux/Mac                           |
 | ------------------------ | ----------------------------------- | ----------------------------------- |
 | List all listening ports | `netstat -aon \| findstr LISTENING` | `sudo lsof -i -P -n \| grep LISTEN` |
