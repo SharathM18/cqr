@@ -252,15 +252,15 @@ docker run -d \
     - if you’re not using Compose, the endpoint is: `http://<container_name>:<container_port>`
     - if you're using Compose, the endpoint is: `http://<service_name>:<container_port>`
 
-| Description                           | Command                                                                           |
-| ------------------------------------- | --------------------------------------------------------------------------------- |
-| Create a user-defined bridge network  | `docker network create <network_name>`                                            |
-| List all networks                     | `docker network ls`                                                               |
-| Inspect details of a network          | `docker network inspect <network_name>`                                           |
-| Inspect details of a network          | `docker inspect <network_name> --format='{{json .NetworkSettings.Networks}} \|jq` |
-| Disconnect a container from a network | `docker network disconnect <network_name> <container_name>`                       |
-| Connect a container to a network      | `docker network connect <network_name> <container_name>`                          |
-| Remove a network                      | `docker network rm <network_name>`                                                |
+| Description                           | Command                                                                            |
+| ------------------------------------- | ---------------------------------------------------------------------------------- |
+| Create a user-defined bridge network  | `docker network create <network_name>`                                             |
+| List all networks                     | `docker network ls`                                                                |
+| Inspect details of a network          | `docker network inspect <network_name>`                                            |
+| Inspect details of a network          | `docker inspect <network_name> --format='{{json .NetworkSettings.Networks}} \| jq` |
+| Disconnect a container from a network | `docker network disconnect <network_name> <container_name>`                        |
+| Connect a container to a network      | `docker network connect <network_name> <container_name>`                           |
+| Remove a network                      | `docker network rm <network_name>`                                                 |
 
 </details>
 
