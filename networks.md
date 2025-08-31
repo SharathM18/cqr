@@ -20,7 +20,7 @@
 | **Task**                 | **Windows**                         | **Linux/Mac**                       |
 | ------------------------ | ----------------------------------- | ----------------------------------- |
 | List all listening ports | `netstat -aon \| findstr LISTENING` | `sudo lsof -i -P -n \| grep LISTEN` |
-| Find specific port       | `netstat -aon \| findstr :PORT`     | `lsof -i :PORT`                     |
-| Kill process             | `taskkill /PID PID /F`              | `kill -9 PID`                       |
+| Find specific port       | `netstat -aon \| findstr :<PORT>`     | `lsof -i :<PORT>`                     |
+| Kill process             | `taskkill /PID <PID> /F`              | `kill -9 <PID>`                       |
 
 </details>
