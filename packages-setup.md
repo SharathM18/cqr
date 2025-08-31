@@ -229,3 +229,75 @@ nvm uninstall <version>
 - Refer this docs [pyenv](https://github.com/pyenv/pyenv.git)
 
 </details>
+
+<details>
+<summary>Prisma Setup for NestJS with PostgreSQL</summary>
+<details>
+<summary>Installation</summary>
+
+```bash
+npm install prisma @prisma/client
+npm install -D prisma
+
+nest g module prisma --no-spec
+nest g controller prisma --no-spec
+nest g service prisma --no-spec
+```
+
+</details>
+<details>
+<summary>Automatically created by running above CMD (Folder Structure)</summary>
+
+```
+├── prisma/
+│   ├── prisma.module.ts
+│   ├── prisma.service.ts
+│   └── schema.prisma
+```
+
+</details>
+
+<details>
+<summary>schema.prisma</summary>
+
+```env
+generator client {
+    provider = "prisma-client-js"
+}
+
+
+// DATABASE_URL="postgresql://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>?schema=public"
+datasource db {
+    provider = "postgresql"
+    url      = "postgresql://postgres:postgres@localhost:5932/master_db?schema=public"
+}
+
+model Role {
+    id          String   @id @default(uuid())
+    name        String
+    ...
+}
+```
+
+</details>
+
+<details><summary>Prisma Commands</summary>
+
+```tsx
+# Generate Prisma Client (always do this after schema changes)
+npx prisma generate
+
+# Run Migrations (only if you changed schema and want to apply to DB)
+npx prisma migrate dev --name init
+
+# Deploy migrations to production
+npx prisma migrate deploy
+
+# Reset database
+npx prisma migrate reset
+
+# View database in Prisma Studio
+npx prisma studio
+```
+
+</details>
