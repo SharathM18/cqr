@@ -228,13 +228,38 @@ git config --global core.autocrlf input
 
 #### **Git aliases** are like shortcuts for longer Git commands.
 
-```powershell
+```.gitconfig
 git config --global -e
 
-<alias>
+[core]
+    editor = \"C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+    autocrlf = true
+[color]
+    ui = auto
+[user]
+    name = Sharath M
+    email = sharathmahadeva@mirafra.com
+[alias]
     up = update-git-for-windows
-    logs = log --oneline --all --graph
-    s = status -s
+    lg = log --oneline --all --graph --decorate
+    logs = log --graph --abbrev-commit --decorate \
+        --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d'
+    s  = status -sb
+    stat = !git status -sb | sed \
+        -e 's/^ M/Modified (unstaged): /' \
+        -e 's/^M /Modified (staged): /' \
+        -e 's/^A /Added: /' \
+        -e 's/^R /Renamed: /' \
+        -e 's/^C /Copied: /' \
+        -e 's/^U /Unmerged: /' \
+        -e 's/^??/Untracked: /' \
+        -e 's/^D /Deleted: /'
+    co = checkout
+    cb = checkout -b
+    br = branch
+    cm = commit -m
+[init]
+    defaultBranch = main
 ```
 
 </details>
