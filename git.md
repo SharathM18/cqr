@@ -143,6 +143,15 @@ Suppose you run: `git reset --soft C`
 
 </details>
 
+<details><summary>Reset Specific Files to a Previous Commit</summary>
+
+```bash
+git restore --source=<commit-hash> -- path/to/file
+git restore --source=<commit-hash> -- path/to/file1 path/to/file2
+```
+
+</details>
+
 <details><summary>Git Stash</summary>
 
 - Git Stash allows you to store only the Staging area by default, so first we need to add to the Staging area, then stash.
