@@ -4,9 +4,11 @@
 
 ```bash
 my-web-app/
-├── docker-compose.yml         # compose file (custom_name-compose.yml)
+├── docker-compose.dev.yml         # compose file
+├── docker-compose.yml
 ├── .env
 ├── frontend/
+│   ├── Dockerfile.dev
 │   ├── Dockerfile
 │   ├── .gitignore
 │   ├── .dockerignore
@@ -14,42 +16,301 @@ my-web-app/
 │   └── src/
 │       └── index.html
 └── backend/
-    ├── Dockerfile             # Development Dockerfile (custom_name.Dockerfile)
+    ├── Dockerfile.dev             # Development Dockerfile
+    ├── Dockerfile
     ├── requirements.txt
     ├── .gitignore
     ├── .dockerignore
     └── app.py
 ```
 
-#### Files: .gitignore and .dockerignore
+<details><summary>Click to expand for .gitignore</summary>
 
 ```bash
-# Node modules
-node_modules
-dist
-npm-debug.log
-yarn-error.log
+# compiled output
+/dist
+/node_modules
+/build
 
-# Environment files
-.env
-.env.*.local
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# Git
-.git
-.gitignore
-
-# OS files
+# OS
 .DS_Store
-Thumbs.db
 
-# IDE/editor files
-.vscode
-.idea
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 ```
 
 </details>
+<details><summary>Click to expand for .dockerignore</summary>
+
+```bash
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+lib-cov
+coverage/
+*.lcov
+.nyc_output
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower dependency directory (https://bower.io/)
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
+.env*
+!.env.example
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next/
+out/
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Vue.js build output
+dist/
+
+# Vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Webpack
+.webpack/
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# NestJS specific
+dist/
+build/
+
+# Angular specific
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# React specific
+build/
+
+# Testing
+coverage/
+.nyc_output
+jest_*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and editors
+.vscode/
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary folders
+tmp/
+temp/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+Jenkinsfile
+.azure/
+
+# Documentation and configs
+README.md
+LICENSE*
+CHANGELOG.md
+.editorconfig
+.prettierrc*
+.eslintrc*
+tsconfig*.json
+jest.config.*
+webpack.config.*
+rollup.config.*
+vite.config.*
+.babelrc*
+tailwind.config.*
+postcss.config.*
+Makefile
+```
+
+</details>
+</details>
 
 <details><summary>Development vs Production (Docker Strategy)</summary>
+
+- alpine → tiny, but more fragile for Python. Stable for Node.
+- slim → slightly bigger, but much more stable for Python.
+- The port your app binds to in code/command is what matters, EXPOSE is just documentation, and -p host:container maps it outside.
+- Always keep EXPOSE in sync with the port your app listens on.
 
 | Aspect                 | Development Phase                        | Production Phase                                              |
 | ---------------------- | ---------------------------------------- | ------------------------------------------------------------- |
@@ -63,17 +324,20 @@ Thumbs.db
 | **Volumes**            | Use volumes for hot reload               | --                                                            |
 | **User**               | Root (default)                           | Non-root user required                                        |
 | **Healthcheck**        | --                                       | Required for container                                        |
-| **OCI Labels**         | Optional                                 | Required (metadata: maintainer, version, etc.)                |
+| **OCI Labels**         | --                                       | Required (metadata: maintainer, version, etc.)                |
 | **Image Scanning**     | --                                       | Required (security compliance)                                |
 | **Debugging**          | Use `RUN echo ...` for inspection        | --                                                            |
 
 </details>
 
-<details><summary>Click to expand Dockerfile (Development)</summary>
+<details><summary>Click to expand Dockerfile.dev (Development)</summary>
+
+- Example for `Node.js`
 
 ```dockerfile
-ARG NODE_VERSION=18.17.0
-FROM node:${NODE_VERSION}-alpine
+FROM node:20.17.0-alpine
+
+RUN apk add --no-cache docker-cli bash git curl
 
 WORKDIR /app
 
@@ -83,79 +347,95 @@ RUN npm ci
 
 COPY . .
 
-ARG NODE_ENV=development
-ENV NODE_ENV=$NODE_ENV
-
 EXPOSE 3000
 
-# CMD ["npm", "run", "start:dev"]
-CMD sh -c 'echo "Running in $NODE_ENV mode with Node.js $NODE_VERSION" && npm run start:dev'
+# Don't use this when you are using docker-compose.yml to run container
+CMD ["npm", "run", "start:dev"]
+```
+
+- Example for `Python`
+
+```dockerfile
+FROM python:3.8-slim-bullseye
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    cmake \
+    git \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
 ```
 
 </details>
 
 <details><summary>Click to expand Dockerfile (Production)</summary>
 
+- Example for `Node.js`
+
 ```dockerfile
-# ---------- Build Stage ----------
-ARG NODE_VERSION=18.17.0
-FROM node:${NODE_VERSION}-alpine AS builder
-
+# ---------- Base Dependencies ----------
+FROM node:20.17.0-alpine AS base
 WORKDIR /app
-
-# Copy package files and install ALL deps (including dev for build tools)
-COPY package*.json ./
-RUN npm ci
-
-# Copy rest of the source
-COPY . .
-
-# Build the NestJS project (outputs to /app/dist)
-RUN npm run build
-
-
-# ---------- Runtime Stage ----------
-FROM node:18-alpine AS runner
-
-WORKDIR /app
-
-# Copy only necessary files from builder
 COPY package*.json ./
 
-# Install only production deps, remove npm cache and clean leftover temp files from Alpine
-RUN RUN npm ci --only=production \
+# Install only production dependencies
+RUN npm ci --only=production \
   && npm cache clean --force \
   && rm -rf /tmp/* /var/cache/apk/*
 
+# ---------- Build Stage ----------
+FROM node:20.17.0-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
-# Copy built application from builder stage
+# ---------- Runtime Stage ----------
+FROM node:20.17.0-alpine AS runner
+WORKDIR /app
+
+RUN apk add --no-cache docker-cli curl bash
+
+# Copy production node_modules from base
+COPY --from=base /app/node_modules ./node_modules
+
+# Copy built code from builder
 COPY --from=builder /app/dist ./dist
 
-# Create a group called "appgroup" and a user called "appuser"
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Create non-root user
+RUN addgroup --gid 1001 appgroup && \
+    adduser --uid 1001 --ingroup appgroup appuser
 
-# Switch to the non-root user
 USER appuser
 
-
-# Set environment variables (override with --env-file at runtime)
-ARG NODE_ENV=production
-ENV NODE_ENV=$NODE_ENV
+# Environment variables
+ENV NODE_ENV=production
 
 EXPOSE 3000
 
-# Healthcheck to ensure container is alive
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
+# Labels
+LABEL org.opencontainers.image.authors="React and Python Team" \
+      org.opencontainers.image.stage="production" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.description="Smart Recruitment with Integrated Proctoring System" \
+      org.opencontainers.image.url="https://github.com/SharathM5932/Smart-Recruitment-with-Integrated-Proctoring-System.git" \
 
-
-# OCI labels for metadata
-LABEL org.opencontainers.image.authors="DevOps Team <ops@example.com>"
-LABEL org.opencontainers.image.stage="production"
-LABEL org.opencontainers.image.version="1.0.0"
-LABEL org.opencontainers.image.description="NestJS Production Image"
-LABEL org.opencontainers.image.url="https://github.com/sharath18"
-LABEL org.opencontainers.image.created="2025-08-19"
 
 CMD ["node", "dist/main.js"]
 ```
@@ -264,7 +544,9 @@ docker run -d \
 
 </details>
 
-<details><summary>Docker Compose</summary>
+<details><summary>Docker Compose (dev: docker-compose.dev.yml) (Prod: docker-compose.yml)</summary>
+
+- You should always run docker compose up from the same folder where your docker-compose.yml is located.
 
 <details><summary>Structure of docker-compose.yml file</summary>
 
@@ -273,11 +555,11 @@ version: "3.9"                                        # Docker Compose file form
 
 services:                                             # Define containers (services) here
     <service_name>:
-        image: <image_name:tag>                       # build an image
+        image: <image_name:tag>                       # build an image (main_app:v1)
         build:
             context: <path>                           # Path to Dockerfile directory (./user)
             dockerfile: Dockerfile                    # (optional) specify Dockerfile
-        container_name: <name>                        # Custom container name
+        container_name: <name>                        # Custom container name (main_app)
         ports:
             - "<host_port>:<container_port>"          # Port mapping
         environment:                                  # Env variables (inline) (SECRET_KEY: jwtsecretkey)
@@ -285,8 +567,11 @@ services:                                             # Define containers (servi
         env_file:                                     # mention .env file path (./user/.env )
             - <path>
         volumes:                                      # Mount volumes
-            - <host_path>:<container_path>            # Bind mount (host_path -> where the dockerfile present, container_path -> idk)
-            - <volume_name>:<container_path>          # Named volume (container_path -> idk)
+            - <host_path>:<container_path>            # Bind mount (host_path -> where the dockerfile present, container_path -> /app)
+            - ./main-app:/app                         # Example for blind mount
+
+            - <volume_name>:<container_path>          # Named volume (container_path -> /app/<see-example>)
+            - main_app_node_modules:/app/node_modules # Example for named volume
         networks:                                     # Networks to connect to
             - <network_name>
         depends_on:                                   # Service dependencies
@@ -304,17 +589,17 @@ networks:                                             # Declare networks
 
 </details>
 
-| Description                                               | Command                                                              |
-| --------------------------------------------------------- | -------------------------------------------------------------------- |
-| Create and start containers defined in docker-compose.yml | `docker compose up`                                                  |
-| Stop and remove containers defined in docker-compose.yml  | `docker compose down`                                                |
-| Build or rebuild services                                 | `docker compose build`                                               |
-| List containers for a specific Docker Compose project     | `docker compose ps`                                                  |
-| View logs for services                                    | `docker compose logs`                                                |
-| Scale services to a specific number of containers         | `docker compose up -d --scale <service_name>=<number_of_containers>` |
-| Run a one-time command in a service                       | `docker compose run <service_name> <command>`                        |
-| Pause a service                                           | `docker compose pause <service_name>`                                |
-| Unpause a service                                         | `docker compose unpause <service_name>`                              |
-| View details of a service                                 | `docker compose ps <service_name>`                                   |
+| Description                                                                                          | Command                                     |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| Just build (If you change Dockerfile or dependencies and if changes code no need blind mount volume) | `docker compose build`                      |
+| Rebuild all services                                                                                 | `docker compose build --no-cache`           |
+| Rebuild specific service                                                                             | `docker compose build --no-cache <service>` |
+| Run with no logs                                                                                     | `docker compose up -d`                      |
+| Stop containers and remove them along with default networks                                          | `docker compose down`                       |
+| Show specific service logs                                                                           | `docker compose logs -f <service>`          |
+| Show all service logs                                                                                | `docker compose logs -f`                    |
+| Stop containers **without removing them** (you can restart later)                                    | `docker compose stop`                       |
+| Start previously stopped containers                                                                  | `docker compose start`                      |
+| Show status of containers (running, stopped, ports, names)                                           | `docker compose ps`                         |
 
 </details>
