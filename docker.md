@@ -547,6 +547,9 @@ docker run -d \
 <details><summary>Docker Compose (dev: docker-compose.dev.yml) (Prod: docker-compose.yml)</summary>
 
 - You should always run docker compose up from the same folder where your docker-compose.yml is located.
+- If you use `docker-compose.dev.yml` as a file name, then run
+  - `$env:COMPOSE_FILE="docker-compose.dev.yml"` - powershell
+  - `export COMPOSE_FILE=docker-compose.dev.yml` - bash
 
 <details><summary>Structure of docker-compose.yml file</summary>
 
@@ -577,7 +580,7 @@ services:                                             # Define containers (servi
         depends_on:                                   # Service dependencies
             - <service_name>                          # Start db before app
         restart: unless-stopped                       # Restart policy (Options: no, on-failure, unless-stopped, always)
-        command: <custom_command>                     # Override default CMD (['npm','run','start:Dev'])
+        command: <custom_command>                     # Override default CMD (['npm','run','start:dev'])
 
 volumes:                                              # Declare named volumes
     <volume_name>:
