@@ -290,3 +290,15 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 - `-C`: Adds a comment (usually your email for identification)
 
 </details>
+
+<details><summary>Trunk-Based Development — Daily Workflow</summary>
+  
+1. Pull the latest from trunk: Keep your local main branch up to date before starting any new work.
+2️. Create a short-lived feature branch: Make small, focused changes only — keep branches alive for hours or a couple of days, not weeks.
+3️. Implement and test locally: Run all test cases before pushing to avoid continuous integration (CI) failures.
+4. Push your branch and create a Pull Request: Create a PR only if there are no merge conflicts.
+5. If merge conflicts exist: Pull the latest trunk, resolve conflicts locally, commit and push again, then reopen or update the pull request.
+6. After CI passes successfully: Merge the pull request into the trunk (main branch).
+
+</details>
+
