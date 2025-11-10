@@ -272,3 +272,21 @@ git config --global -e
 ```
 
 </details>
+
+<details><summary>SSH key generation</summary>
+
+- SSH key generation creates a pair of cryptographic keys, a private key and a public key, used for secure, passwordless authentication between your local machine and a remote server (like GitHub, GitLab, or a Linux VM).
+- Private key (id_rsa): stays securely stored on your local system (never shared).
+- Public key (id_rsa.pub): uploaded to the remote host (e.g., GitHub).
+
+When you connect via SSH, the remote server uses the public key to verify your private key, proving your identity without sending any passwords.
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+- `-t`: Specifies the encryption type (RSA, Ed25519, etc.)
+- `-b`: Number of bits in the key (higher = more secure)
+- `-C`: Adds a comment (usually your email for identification)
+
+</details>
