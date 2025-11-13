@@ -72,6 +72,8 @@ git branch
 
 git branch <branch_name>
 
+git checkout -b <branch_name>
+
 git switch -c <branch_name>
 git checkout <branch_name>
 
@@ -291,6 +293,18 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 </details>
 
+<details><summary>Teammates should do after getting private repo access</summary>
+
+- Generate SSH key on their laptop: `ssh-keygen -t rsa -b 4096 -C "their_email@example.com"`
+- Add their public SSH key to GitHub: `cat ~/.ssh/id_rsa.pub` 
+  - Then go to: GitHub → Settings → SSH and GPG keys → New SSH key → Paste it → Save
+- Test SSH connection: `ssh -T git@github.com`
+  - If successful: Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+
+- Clone your private repo: `git clone git@github.com:your-username/your-repo-name.git`
+
+</details>
+
 <details><summary>Trunk-Based Development — Daily Workflow</summary>
   
 1. Pull the latest changes from trunk: Keep your local main branch up to date before starting any new work.
@@ -301,4 +315,3 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 6. After CI passes successfully: Merge the pull request into the trunk (main branch).
 
 </details>
-
