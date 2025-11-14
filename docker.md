@@ -594,7 +594,7 @@ networks:                                             # Declare networks
 
 | Description                                                                                          | Command                                     |
 | ---------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| Just build (If you change Dockerfile or dependencies and if changes code no need blind mount volume) | `docker compose build`                      |
+| Just build (only if 1st time build and if you made changes in the code then no need build again blind mount volume will take care) | `docker compose build`                      |
 | Rebuild all services                                                                                 | `docker compose build --no-cache`           |
 | Rebuild specific service                                                                             | `docker compose build --no-cache <service>` |
 | Run with no logs                                                                                     | `docker compose up -d`                      |
