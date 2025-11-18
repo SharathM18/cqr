@@ -154,6 +154,15 @@ git restore --source=<commit-hash> -- path/to/file1 path/to/file2
 
 </details>
 
+<details><summary>Move files from the staging area back to the working directory</summary>
+
+```bash
+git restore --staged <filename>
+git restore --staged .
+```
+
+</details>
+
 <details><summary>Git Stash</summary>
 
 - Git Stash allows you to store only the Staging area by default, so first we need to add to the Staging area, then stash.
