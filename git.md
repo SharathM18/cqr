@@ -180,6 +180,11 @@ git stash drop stash@{0}
 
 git stash clear
 ```
+```
+0 (first-stash)   0 (second-stash)   0 (third-stash)
+                  1 (first-stash)    1 (second-stash)
+                                     2 (first-stash)
+```
 
 </details>
 
