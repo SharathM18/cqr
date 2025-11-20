@@ -499,6 +499,9 @@ docker run -d \
 | Remove a stopped container                   | `docker rm <container_name_or_id>`                                                       |
 | Remove a running container (forcefully)      | `docker rm -f <container_name_or_id>`                                                    |
 | View container logs                          | `docker logs <container_name_or_id>`                                                     |
+| Interacting with docker container            | `docker exec -it <container_name> bash`                                                  |
+| Copying the files from local to inside the container | `docker cp <source-path> <container_name>:<destination-path>`                            |
+
 
 </details>
 
