@@ -88,9 +88,9 @@ git push -u origin <branch_name>
 git push -d origin <branch_name>
 
 # Delete remote branch,
-git push <remote_name> --delete <branch_name>
+git push origin --delete <branch_name>
 
-# For remote renaming branch: change branch name in local first and push that branch to origin and  delete the existing branch using above cmd.
+# For remote renaming branch: change the branch name in local first and push that branch to origin, and delete the existing branch using above cmd.
 
 # Lists remote-tracking branches
 git branch -r
