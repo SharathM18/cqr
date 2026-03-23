@@ -301,12 +301,13 @@ When you connect via SSH, the remote server uses the public key to verify your p
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
 ```bash
-ssh-keygen -t ed25519 -C "your_email@example.com"
+ssh-keygen -t ed25519 -C "work-account" -f ~/.ssh/id_ed25519_work
 ```
 
 - `-t`: Specifies the encryption type (RSA, Ed25519, etc.)
 - `-b`: Number of bits in the key (higher = more secure)
 - `-C`: Adds a comment (usually your email for identification)
+- `-f`: custom name and prevents overwriting your existing key
 
 </details>
 
